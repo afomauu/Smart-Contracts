@@ -1,0 +1,83 @@
+pragma solidity ^0.4.18;
+
+/** 
+ * @title Attendance
+ * @dev tracks class Attendance
+ */
+contract AttendanceTracking {
+   
+    struct List {
+        string name; //name of members
+        uint class; //class attended
+        uint count; // count of how many times members attended
+    }
+
+    event Attended (
+        string List,
+        uint class,
+        uint counttracker
+    );
+    
+    event TotalAttended (
+        string List,
+        uint class,
+        uint counttracker
+    );
+    
+    uint public studentID;
+    uint public classID;
+    string public membername;
+    uint public Totalcount;
+    
+    
+    List[] lists;
+    
+    function AttendanceTracking(
+        uint  _studentID,
+        uint  _classID,
+        string  _membername,
+        uint  _Totalcount
+    ) public {
+        studentID = _studentID;
+        classID = _classID;
+        membername = _membername;
+        Totalcount = 0;
+        
+        lists.push(List({
+            name: _membername,
+            class: _classID,
+            count: 0
+    
+        }));
+        
+        Attended(_membername, _classID, 0);
+    }
+
+    function TotalAttendance(
+        string _name,
+        uint _class,
+        uint count
+    )
+        public 
+        returns (bool good)
+    {
+    
+        
+        lists.push(List({
+            name: _name,
+            class: _class,
+            count: 0
+        }));
+        
+        TotalAttended(_name, _class, count);
+        return true;
+    }
+    
+    function getLists()
+        public
+        constant
+        returns (List[])
+    {
+        return lists;
+    }
+}
